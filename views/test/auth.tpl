@@ -5,11 +5,12 @@
             <select name="auth_result">
                 <option value="authed">Authed: Test User</option>
                 <option value="notauthed">Not Authed</option>
-                <option value="rejected">Reject App (not implemented)</option>
             </select>
 
             <input type="submit" />
 
         </form>
+
+        <a href="">Reject app</a>
     </body>
 </html>

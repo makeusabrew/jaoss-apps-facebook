@@ -3,17 +3,22 @@
 require_once("apps/facebook/helpers/auth/handlers/abstract.php");
 
 class TestFacebookAuthHandler extends FacebookAuthHandler {
-    public function parseSignedRequest($request, $secret) {
-        $path = PROJECT_ROOT."apps/facebook/tests/stubs/auth/".$request.".".$secret.".json";
-        Log::debug("Looking for signed request data in [".$path."]");
-
-        return json_decode(
-            file_get_contents($path),
-            true
-        );
-    }
-
     public function getAuthBase() {
         return "test/auth";
+    }
+
+    public function encodeSignedRequest($data, $secret) {
+
+        $encodedData = base64_encode(json_encode($data));
+        $encodedData = strtr($encodedData, '+/', '-_');
+        $encodedData = str_replace('=', '', $encodedData);
+
+        $signature = hash_hmac('sha256', $encodedData, $secret, true);
+
+        $encodedSig = base64_encode($signature);
+        $encodedSig = strtr($encodedSig, '+/', '-_');
+        $encodedSig = str_replace('=', '', $encodedSig);
+
+        return $encodedSig.".".$encodedData;
     }
 }

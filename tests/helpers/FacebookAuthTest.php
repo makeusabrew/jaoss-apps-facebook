@@ -37,10 +37,10 @@ class FacebookAuthTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testParseSignedRequestRespectsCorrectAppSecret() {
-        $result = $this->helper->parseSignedRequest("authed");
+        $result = $this->helper->parseSignedRequest("FlZ01X4JNLVjuQ4Umt1rvcOM45ilLm2efMkMCyNfqOw.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImV4cGlyZXMiOjEzNDIwMjI0MDAsImlzc3VlZF9hdCI6MTM0MjAxNjYxOCwib2F1dGhfdG9rZW4iOiJteV9mYWtlX2F1dGhlZF90b2tlbiIsInBhZ2UiOnsiaWQiOiI0MjM3NTY1MDEwMDExMzYiLCJsaWtlZCI6ZmFsc2UsImFkbWluIjp0cnVlfSwidXNlciI6eyJjb3VudHJ5IjoiZ2IiLCJsb2NhbGUiOiJlbl9VUyIsImFnZSI6eyJtaW4iOjIxfX0sInVzZXJfaWQiOiI1MTA4NDI2MDUifQ");
 
         // we're just ensuring that the 'secret' has been tacked on; if it has,
-        // the correct stub will be picked up and this assertion will pass
+        // the request will decode properly and this test will pass
         $this->assertEquals("my_fake_authed_token", $result['oauth_token']);
     }
 

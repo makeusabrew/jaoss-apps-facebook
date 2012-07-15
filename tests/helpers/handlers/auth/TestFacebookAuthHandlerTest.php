@@ -6,11 +6,29 @@ class TestFacebookAuthHandlerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals("test/auth", $handler->getAuthBase());
     }
 
-    public function testParseSignedRequestWithValidStubReturnsExpectedArray() {
+    public function testEncodeSignedRequest() {
         $handler = new TestFacebookAuthHandler();
 
-        $result = $handler->parseSignedRequest("authed", "test_secret");
+        $data = array(
+            "algorithm" => "HMAC-SHA256",
+            "foo" => "bar",
+            "baz" => "test",
+        );
 
-        $this->assertEquals($result["oauth_token"], "my_fake_authed_token");
+        $signedRequest = $handler->encodeSignedRequest(
+            $data,
+            "fake_secret"
+        );
+
+        $decodedData = $handler->parseSignedRequest(
+            $signedRequest,
+            "fake_secret"
+        );
+
+        $this->assertEquals(array(
+            "algorithm" => "HMAC-SHA256",
+            "foo" => "bar",
+            "baz" => "test",
+        ), $decodedData);
     }
 }

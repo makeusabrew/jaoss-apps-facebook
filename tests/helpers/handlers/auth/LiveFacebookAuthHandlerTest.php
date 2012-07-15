@@ -21,39 +21,4 @@ class LiveFacebookAuthHandlerTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($result["algorithm"], "HMAC-SHA256");
     }
-
-    public function testEncodeSignedRequest() {
-        $handler = new LiveFacebookAuthHandler();
-
-        $secret = "03f36aec5ee15689f8dad1a9636672c3";
-
-
-        $sig = "ZHGGSOHORNS27QfoP_O4TnQOrU0lsxqwmdqObMW2brY";
-        $data = "eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImlzc3VlZF9hdCI6MTM0MTk5MjQxOSwicGFnZSI6eyJpZCI6IjQyMzc1NjUwMTAwMTEzNiIsImxpa2VkIjpmYWxzZSwiYWRtaW4iOnRydWV9LCJ1c2VyIjp7ImNvdW50cnkiOiJnYiIsImxvY2FsZSI6ImVuX1VTIiwiYWdlIjp7Im1pbiI6MjF9fX0";
-
-        $result = $handler->parseSignedRequest(
-            $sig.".".$data,
-            $secret
-        );
-
-        $this->assertEquals(
-            $sig.".".$data,
-            $this->encodeSignedRequest($result, $secret)
-        );
-    }
-
-    protected function encodeSignedRequest($data, $secret) {
-
-        $encodedData = base64_encode(json_encode($data));
-        $encodedData = strtr($encodedData, '+/', '-_');
-        $encodedData = str_replace('=', '', $encodedData);
-
-        $signature = hash_hmac('sha256', $encodedData, $secret, true);
-
-        $encodedSig = base64_encode($signature);
-        $encodedSig = strtr($encodedSig, '+/', '-_');
-        $encodedSig = str_replace('=', '', $encodedSig);
-
-        return $encodedSig.".".$encodedData;
-    }
 }

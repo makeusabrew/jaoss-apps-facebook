@@ -31,4 +31,6 @@ class AbstractFacebookAuthHandlerTest extends PHPUnit_Framework_TestCase {
             ))
         );
     }
+
+    // @todo test other aspects of parse - algorithm, incorrect sig etc.
 }

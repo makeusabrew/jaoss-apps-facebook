@@ -16,5 +16,6 @@ if (!Settings::getValue("facebook", "allow_test_iframe", false)) {
 
 PathManager::loadPaths(
     array("/test/iframe", "iframe", "Test"),
-    array("/test/auth", "auth", "Test")
+    array("/test/auth", "auth", "Test"),
+    array("/test/encode", "encode", "Test")
 );

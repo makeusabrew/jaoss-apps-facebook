@@ -6,5 +6,5 @@ User authed?
 {/if}
 
 {if isset($authUrl)}
-    Auth Url: <a href="{$authUrl}">{$authUrl}</a>
+    Auth Url: <a target="top" href="{$authUrl}">{$authUrl}</a>
 {/if}

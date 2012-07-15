@@ -1,8 +1,10 @@
 <?php
+
 require_once("apps/facebook/helpers/auth/handlers/abstract.php");
+
 class FacebookAuth {
     protected static $instance = null;
-    protected $handler = null;
+    protected $handler         = null;
 
     protected $appSecret;
     protected $appId;
