@@ -13,6 +13,14 @@
     <p>Surname: {$user->surname}</p>
 {/if}
 
+{if isset($graphError)}
+    <p>Exception thrown by Graph API.</p>
+{/if}
+
+{if isset($authError)}
+    <p>Exception thrown decoding signed request.</p>
+{/if}
+
 {if isset($authUrl)}
     <p>
         Auth Url: <a target="top" href="{$authUrl}">{$authUrl}</a>

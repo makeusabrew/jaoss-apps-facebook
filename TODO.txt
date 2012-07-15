@@ -1,4 +1,3 @@
-* handle exceptions in controller
 * handle duff FB requests
 * nice clear examples of dumping out data etc.
 * zombie tests?

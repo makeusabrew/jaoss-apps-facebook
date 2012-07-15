@@ -60,9 +60,11 @@ class FacebookController extends Controller {
                 } catch (FacebookAuthException $e) {
                     Log::warn("Got Facebook Auth exception [".$e->getCode()."] - [".$e->getMessage()."]");
                     // @todo anything else?
+                    $this->assign('authError', true);
                 } catch (FacebookGraphException $e) {
                     Log::warn("Got Facebook Graph exception [".$e->getCode()."] - [".$e->getMessage()."]");
                     // @todo anything else we need to do here? Set an error so the template knows? etc.
+                    $this->assign('graphError', true);
                 }
             }
         } else {
@@ -70,6 +72,8 @@ class FacebookController extends Controller {
         }
 
         $this->assign('user', $this->user);
+
+        $this->response->addHeader("P3P", 'CP="CAO PSA OUR"');
     }
 
     public function index() {
@@ -78,5 +82,7 @@ class FacebookController extends Controller {
             Log::debug("User not authed, auth URL [".$fbAuth->getAuthUrl()."]");
             $this->assign('authUrl', $fbAuth->getAuthUrl());
         }
+
+        return $this->render("index");
     }
 }
