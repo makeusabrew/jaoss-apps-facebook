@@ -1,3 +1,6 @@
 * handle duff FB requests
 * nice clear examples of dumping out data etc.
+* allow fixture to exist in app folder
+* test new / existing user
+* test updates to existing user (before + after)
 * zombie tests?
