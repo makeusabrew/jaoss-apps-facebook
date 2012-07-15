@@ -19,22 +19,22 @@ class FacebookController extends Controller {
 
             if ($this->request->isPost() && $signedRequest != null) {
 
-                $data = $fbAuth->parseSignedRequest($signedRequest);
+                try {
+                    $data = $fbAuth->parseSignedRequest($signedRequest);
 
-                Log::debug("Got signed request: [".json_encode($data)."]");
+                    Log::debug("Got signed request: [".json_encode($data)."]");
 
-                $fbAuth->setData($data);
+                    $fbAuth->setData($data);
 
-                if ($fbAuth->isAuthed()) {
-                    Log::debug("Authenticating user based on signed request");
+                    if ($fbAuth->isAuthed()) {
+                        Log::debug("Authenticating user based on signed request");
 
-                    $fbGraph = FacebookGraph::getInstance();
+                        $fbGraph = FacebookGraph::getInstance();
 
-                    $fbGraph->setAccessToken(
-                        $fbAuth->getOauthToken()
-                    );
+                        $fbGraph->setAccessToken(
+                            $fbAuth->getOauthToken()
+                        );
 
-                    try {
                         $data = $fbGraph->get('me');
 
                         $user = Table::factory('FacebookUsers')->read($data['id']);
@@ -56,10 +56,13 @@ class FacebookController extends Controller {
                         $user->addToSession();
 
                         $this->user = $user;
-                    } catch (FacebookGraphException $e) {
-                        Log::warn("Got Facebook Graph exception [".$e->getCode()."] - [".$e->getMessage()."]");
-                        // anything else we need to do here? Set an error so the template knows? etc.
                     }
+                } catch (FacebookAuthException $e) {
+                    Log::warn("Got Facebook Auth exception [".$e->getCode()."] - [".$e->getMessage()."]");
+                    // @todo anything else?
+                } catch (FacebookGraphException $e) {
+                    Log::warn("Got Facebook Graph exception [".$e->getCode()."] - [".$e->getMessage()."]");
+                    // @todo anything else we need to do here? Set an error so the template knows? etc.
                 }
             }
         } else {
