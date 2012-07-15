@@ -18,6 +18,7 @@ circumventing the need to constantly check the app within a Facebook iframe.
 app_id=(int)
 app_secret=(string)
 page_url=(string)
+```
 
 ### Optional Settings (required to run tests)
 
