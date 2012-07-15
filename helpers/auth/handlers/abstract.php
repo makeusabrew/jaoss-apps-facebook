@@ -19,16 +19,14 @@ abstract class FacebookAuthHandler {
 
         if (!isset($data['algorithm']) || strtoupper($data['algorithm']) !== 'HMAC-SHA256') {
             Log::warn('Unknown algorithm. Expected HMAC-SHA256');
-            throw new FacebookAuthException(
-                "Unknown or invalid algorithm"
-            );
+            throw new FacebookAuthException("Unknown or invalid algorithm");
         }
 
         // check sig
         $expected_sig = hash_hmac('sha256', $payload, $secret, $raw = true);
         if ($sig !== $expected_sig) {
             Log::warn('Bad Signed JSON signature!');
-            return null;
+            throw new FacebookAuthException("Bad signature");
         }
 
         return $data;

@@ -46,5 +46,17 @@ class AbstractFacebookAuthHandlerTest extends PHPUnit_Framework_TestCase {
         $this->fail("Expected exception not raised");
     }
 
-    // @todo test other aspects of parse - algorithm, incorrect sig etc.
+    public function testBadSignatureThrowsCorrectException() {
+        $stub = $this->getMockForAbstractClass("FacebookAuthHandler");
+
+        try {
+            $signedRequest = "bad_signature.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiJ9";
+            $stub->parseSignedRequest($signedRequest, "foo");
+        } catch (FacebookAuthException $e) {
+            $this->assertEquals("Bad signature", $e->getMessage());
+            return;
+        }
+
+        $this->fail("Expected exception not raised");
+    }
 }
