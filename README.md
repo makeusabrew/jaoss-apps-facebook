@@ -4,7 +4,7 @@ A simple application demonstrating server side authentication with Facebook
 for canvas apps and page tabs, and *very* basic graph API interaction.
 
 The app comes with test handlers for both authentication and graph API interaction,
-allowing for fully automated testing by mocking the various Facebook touchpoints.
+allowing for fully automated testing by mocking the various Facebook endpoints.
 
 Several test routes are exposed which wrap the main application in an iframe -
 just as on facebook.com - allowing developers to interactively submit POST requests
