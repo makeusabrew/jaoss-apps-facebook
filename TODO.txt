@@ -1,0 +1,10 @@
+* parseSignedRequest to abstract
+* delete auth stubs
+* create web interface to generate signed request
+* rework method of posting signed request
+* make parse method throw exceptions
+* test exceptions
+* handle exceptions in controller
+* handle duff FB requests
+* nice clear examples of dumping out data etc.
+* zombie tests?
