@@ -1,4 +1,3 @@
-* delete auth stubs
 * rework method of posting signed request
 * make parse method throw exceptions
 * test exceptions

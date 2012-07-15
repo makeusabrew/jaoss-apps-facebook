@@ -32,5 +32,19 @@ class AbstractFacebookAuthHandlerTest extends PHPUnit_Framework_TestCase {
         );
     }
 
+    public function testNoAlgorithmKeyThrowsCorrectException() {
+        $stub = $this->getMockForAbstractClass("FacebookAuthHandler");
+
+        try {
+            $signedRequest = "5RnAi2q1b0SOg4R77kdCeG1ei4xZ8b8gbee0BJcGfuM.eyJzaW1wbGUiOiJzdHViIn0";
+            $stub->parseSignedRequest($signedRequest, "foo");
+        } catch (FacebookAuthException $e) {
+            $this->assertEquals("Unknown or invalid algorithm", $e->getMessage());
+            return;
+        }
+
+        $this->fail("Expected exception not raised");
+    }
+
     // @todo test other aspects of parse - algorithm, incorrect sig etc.
 }

@@ -1,4 +1,7 @@
 <?php
+
+require_once("apps/facebook/helpers/auth/exceptions/auth.php");
+
 abstract class FacebookAuthHandler {
     abstract public function getAuthBase();
 
@@ -14,9 +17,11 @@ abstract class FacebookAuthHandler {
         $sig = $this->base64_url_decode($encoded_sig);
         $data = json_decode($this->base64_url_decode($payload), true);
 
-        if (strtoupper($data['algorithm']) !== 'HMAC-SHA256') {
+        if (!isset($data['algorithm']) || strtoupper($data['algorithm']) !== 'HMAC-SHA256') {
             Log::warn('Unknown algorithm. Expected HMAC-SHA256');
-            return null;
+            throw new FacebookAuthException(
+                "Unknown or invalid algorithm"
+            );
         }
 
         // check sig
